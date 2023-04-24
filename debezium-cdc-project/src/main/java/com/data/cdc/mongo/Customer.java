@@ -1,4 +1,4 @@
-package com.data.cdc.domain;
+package com.data.cdc.mongo;
 
 import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -8,6 +8,7 @@ import javax.persistence.Id;
 @Document
 @Getter
 public class Customer {
+
     @Id
     private Long id;
     private String fullname;

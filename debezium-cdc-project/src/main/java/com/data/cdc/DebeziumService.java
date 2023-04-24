@@ -22,19 +22,17 @@ import static io.debezium.data.Envelope.FieldName.*;
 import static java.util.stream.Collectors.toMap;
 
 @Component
-public class DebeziumListener {
+public class DebeziumService {
 
     private final Executor executor = Executors.newSingleThreadExecutor();
-    private final CustomerService customerService;
+    private final MongoService customerService;
     private final DebeziumEngine<RecordChangeEvent<SourceRecord>> debeziumEngine;
 
-    public DebeziumListener(Configuration customerConnectorConfiguration, CustomerService customerService) {
-
+    public DebeziumService(Configuration customerConnectorConfiguration, MongoService customerService) {
         this.debeziumEngine = DebeziumEngine.create(ChangeEventFormat.of(Connect.class))
                 .using(customerConnectorConfiguration.asProperties())
                 .notifying(this::handleChangeEvent)
                 .build();
-
         this.customerService = customerService;
     }
 
@@ -58,7 +56,6 @@ public class DebeziumListener {
             }
         }
     }
-
 
     @PostConstruct
     private void start() {

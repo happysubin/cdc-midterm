@@ -1,21 +1,22 @@
 package com.data.cdc;
 
-import com.data.cdc.domain.Customer;
-import com.data.cdc.domain.CustomerRepository;
+import com.data.cdc.mongo.Customer;
+import com.data.cdc.mongo.MongoCustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.debezium.data.Envelope.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class CustomerService {
+public class MongoService {
 
-    private final CustomerRepository customerRepository;
+    private final MongoCustomerRepository customerRepository;
 
     public void replicateData(Map<String, Object> customerData, Operation operation) {
         final ObjectMapper mapper = new ObjectMapper();
@@ -28,5 +29,9 @@ public class CustomerService {
         else {
             customerRepository.save(customer);
         }
+    }
+
+    public List<Customer>  getReplicateDate(){
+        return customerRepository.findAll();
     }
 }

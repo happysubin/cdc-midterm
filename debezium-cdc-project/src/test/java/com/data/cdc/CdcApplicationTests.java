@@ -1,24 +1,27 @@
 package com.data.cdc;
 
-import com.data.cdc.domain.Customer;
-import com.data.cdc.domain.CustomerRepository;
+import com.data.cdc.mysql.Customer;
+import com.data.cdc.mysql.MySQLCustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @SpringBootTest
 class CdcApplicationTests {
 	
 	@Autowired
-	CustomerRepository customerRepository;
+	MySQLCustomerRepository customerRepository;
 
 	@Test
-	void contextLoads() {
-		List<Customer> all = customerRepository.findAll();
-		for (Customer customer : all) {
-			System.out.println("customer.toString() = " + customer.toString());
+	@Rollback(value = false)
+	@Transactional(readOnly = false)
+	void insertCustomer() {
+		for (Long i = 0L; i < 100L; i++) {
+			Customer customer = new Customer(i, "email" + i, "email " + i);
+			customerRepository.save(customer);
 		}
 	}
 }
