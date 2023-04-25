@@ -12,7 +12,7 @@ import java.util.Map;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class CustomService {
+public class CustomerService {
 
     private final CustomerRepository customerRepository;
 

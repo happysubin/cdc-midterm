@@ -16,7 +16,7 @@ public class CdcApplication {
 	@Bean
 	public Configuration customerConnector() {
 		return Configuration.create()
-				.with("name", "customer-mysql-connector")
+				.with("name", "customer_mysql_connector")
 				.with("connector.class", "io.debezium.connector.mysql.MySqlConnector")
 				.with("offset.storage", "org.apache.kafka.connect.storage.FileOffsetBackingStore")
 				.with("offset.storage.file.filename", "/tmp/offsets.dat")
@@ -29,11 +29,11 @@ public class CdcApplication {
 				//.with("database.include.list", "source")
 				//.with("include.schema.changes", "false")
 				.with("database.server.id", "10181")
-				.with("database.server.name", "customer-mysql-db-server")
+				.with("database.server.name", "customer_mysql_db_server")
 				.with("database.history", "io.debezium.relational.history.FileDatabaseHistory")
 				.with("database.history.file.filename", "/tmp/dbhistory.dat")
 				.with(MySqlConnectorConfig.DATABASE_INCLUDE_LIST, "source")
-				.with(MySqlConnectorConfig.TABLE_INCLUDE_LIST , "customer")
+				.with(MySqlConnectorConfig.TABLE_INCLUDE_LIST , "source.customer")
 				.build();
 	}
 }
