@@ -10,3 +10,5 @@ CREATE TABLE customer
 INSERT INTO customer (id, fullname, email) VALUES (1, 'John Doe', 'jd@example.com')
 UPDATE customer t SET t.email = 'john.doe@example.com' WHERE t.id = 1
 DELETE FROM customer WHERE id = 1
+
+ALTER TABLE customer RENAME TO customer_small;
