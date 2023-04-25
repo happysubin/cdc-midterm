@@ -12,6 +12,19 @@ services:
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
+  
+  mysql2:
+    image: mysql
+    container_name: mysql2
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_USER: mysqluser
+      MYSQL_PASSWORD: mysqlpw
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
 
   zookeeper-1:
     image: confluentinc/cp-zookeeper:latest
