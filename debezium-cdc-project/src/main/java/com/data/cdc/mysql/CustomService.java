@@ -1,7 +1,5 @@
-package com.data.cdc;
+package com.data.cdc.mysql;
 
-import com.data.cdc.mongo.Customer;
-import com.data.cdc.mongo.MongoCustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.debezium.data.Envelope.Operation;
 import lombok.RequiredArgsConstructor;
@@ -14,15 +12,15 @@ import java.util.Map;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class MongoService {
+public class CustomService {
 
-    private final MongoCustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
     public void replicateData(Map<String, Object> customerData, Operation operation) {
         final ObjectMapper mapper = new ObjectMapper();
         final Customer customer = mapper.convertValue(customerData, Customer.class);
 
-        log.info("몽고 디비 시작 {}", customer.toString());
+        log.info("cdc 저장 시작,{}", customer.toString());
         if (Operation.DELETE == operation) {
             customerRepository.deleteById(customer.getId());
         }

@@ -1,5 +1,6 @@
 package com.data.cdc;
 
+import com.data.cdc.mysql.CustomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CdcController {
 
-    private final MongoService mongoService;
+    private final CustomService customService;
 
     @GetMapping("/cdc-result")
     public ResponseEntity getCdcResult(){
-        return ResponseEntity.ok(mongoService.getReplicateDate());
+        return ResponseEntity.ok(customService.getReplicateDate());
     }
 }

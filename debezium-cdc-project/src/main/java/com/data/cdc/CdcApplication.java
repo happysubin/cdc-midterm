@@ -1,6 +1,7 @@
 package com.data.cdc;
 
 import io.debezium.config.Configuration;
+import io.debezium.connector.mysql.MySqlConnectorConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -25,12 +26,14 @@ public class CdcApplication {
 				.with("database.user", "root")
 				.with("database.password", "1234")
 				.with("database.dbname", "source")
-				.with("database.include.list", "source")
-				.with("include.schema.changes", "false")
+				//.with("database.include.list", "source")
+				//.with("include.schema.changes", "false")
 				.with("database.server.id", "10181")
 				.with("database.server.name", "customer-mysql-db-server")
 				.with("database.history", "io.debezium.relational.history.FileDatabaseHistory")
 				.with("database.history.file.filename", "/tmp/dbhistory.dat")
+				.with(MySqlConnectorConfig.DATABASE_INCLUDE_LIST, "source")
+				.with(MySqlConnectorConfig.TABLE_INCLUDE_LIST , "customer")
 				.build();
 	}
 }

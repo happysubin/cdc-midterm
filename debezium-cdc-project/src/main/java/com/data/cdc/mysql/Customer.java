@@ -1,9 +1,13 @@
 package com.data.cdc.mysql;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
+@Getter
 public class Customer {
 
     @Id

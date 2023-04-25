@@ -1,5 +1,6 @@
 package com.data.cdc;
 
+import com.data.cdc.mysql.CustomService;
 import io.debezium.config.Configuration;
 import io.debezium.embedded.Connect;
 import io.debezium.engine.DebeziumEngine;
@@ -25,10 +26,10 @@ import static java.util.stream.Collectors.toMap;
 public class DebeziumService {
 
     private final Executor executor = Executors.newSingleThreadExecutor();
-    private final MongoService customerService;
+    private final CustomService customerService;
     private final DebeziumEngine<RecordChangeEvent<SourceRecord>> debeziumEngine;
 
-    public DebeziumService(Configuration customerConnectorConfiguration, MongoService customerService) {
+    public DebeziumService(Configuration customerConnectorConfiguration, CustomService customerService) {
         this.debeziumEngine = DebeziumEngine.create(ChangeEventFormat.of(Connect.class))
                 .using(customerConnectorConfiguration.asProperties())
                 .notifying(this::handleChangeEvent)
@@ -52,7 +53,7 @@ public class DebeziumService {
                         .map(fieldName -> Pair.of(fieldName, struct.get(fieldName)))
                         .collect(toMap(Pair::getKey, Pair::getValue));
 
-                this.customerService.replicateData(payload, operation);
+                this.customerService.replicateData(payload, operation); //cdc 데이터 저장
             }
         }
     }
